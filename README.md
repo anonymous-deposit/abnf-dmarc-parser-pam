@@ -26,7 +26,7 @@ dmarc_record = "v=DMARC1; p=reject; rua=mailto:bob@example.com; ruf=mailto:bob@e
 parser = DmarcParser()
 result = parser.parse(dmarc_record, follow_downgrade=True)
 
-assert result.v.effective_value == "v=DMARC1;"
+assert result.v.effective_value == "DMARC1"
 assert result.p.effective_value == "reject"
 assert result.sp.effective_value == "reject"
 assert result.rua.valid[0]['email'] == "bob@example.com"
@@ -44,66 +44,3 @@ except DmarcException as e:
     print(f"error in DMARC record: {e.value}")
 ```
 
-Result 
-
-```json
-{
-  "v": {
-    "value": "DMARC1",
-    "explicit": true
-  },
-  "p": {
-    "value": "reject",
-    "explicit": true
-  },
-  "sp": {
-    "value": "reject",
-    "explicit": true
-  },
-  "adkim": {
-    "value": "r",
-    "explicit": true
-  },
-  "aspf": {
-    "value": "r",
-    "explicit": true
-  },
-  "fo": {
-    "value": [
-      "0"
-    ],
-    "explicit": true
-  },
-  "rf": {
-    "value": "afrf",
-    "explicit": false
-  },
-  "ri": {
-    "value": 86400,
-    "explicit": false
-  },
-  "pct": {
-    "value": 100,
-    "explicit": false
-  },
-  "rua": {
-    "value": [
-      {
-        "email": "bob@example.com",
-        "limit": 0
-      }
-    ],
-    "explicit": true
-  },
-  "ruf": {
-    "value": [
-      {
-        "email": "bob@example.com",
-        "limit": 0
-      }
-    ],
-    "explicit": true
-  }
-}
-
-```
